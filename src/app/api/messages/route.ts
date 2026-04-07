@@ -8,7 +8,7 @@ const supabase = createClient(
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
-  const room = searchParams.get('room') || 'startup'
+  const room = searchParams.get('room') || 'office'
 
   const { data, error } = await supabase
     .from('messages')
@@ -36,7 +36,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Message too long' }, { status: 400 })
   }
 
-  // 욕설 필터 (확장 가능)
   const blocked = ['씨발', '개새끼', '존나']
   const filtered = blocked.some(w => text.includes(w))
   if (filtered) {
